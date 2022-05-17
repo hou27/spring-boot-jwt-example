@@ -9,10 +9,3 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
-  mvc:
-    servlet:
-      load-on-startup: 1
-  security:
-    user:
-      name: test
-      password: tester
