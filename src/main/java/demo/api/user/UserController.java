@@ -20,16 +20,7 @@ public class UserController {
   private final UserService userService;
 
   @PostMapping("/signUp")
-  public Boolean signUp(@ModelAttribute @Validated UserSignUpRequest signUpReq) throws Exception {
-    if(userService.isEmailExist(signUpReq.getEmail())) {
-      throw new Exception("Your Mail already Exist.");
-    }
-    User newUser = userService.signUp(signUpReq.toUserEntity());
-    System.out.println("newUser = " + newUser.toString());
-    if(newUser.getId() != null) {
-      System.out.println("running");
-      return true;
-    }
-    return false;
+  public User signUp(@ModelAttribute @Validated UserSignUpRequest signUpReq) throws Exception {
+    return userService.signUp(signUpReq);
   }
 }

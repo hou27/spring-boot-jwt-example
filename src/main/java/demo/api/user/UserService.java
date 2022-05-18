@@ -1,21 +1,30 @@
 package demo.api.user;
 
 import demo.api.user.domain.User;
+import demo.api.user.dtos.UserSignUpRequest;
+import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
   /**
    * 유저의 정보로 회원가입
-   * @param user 가입할 유저의 정보
+   * @param signUpReq 가입할 유저의 정보 Dto
    * @return 가입된 유저 정보
    */
-  User signUp(User user);
+  User signUp(UserSignUpRequest signUpReq) throws Exception;
+
+  /**
+   * 모든 유저 리스트를 반환
+   * @return 유저 리스트
+   */
+  List<User> findAll();
 
   /**
    * 이메일을 통해 유저 조회
    * @param email
    * @return 조회된 유저
    */
-  User findUserByEmail(String email);
+  Optional<User> findByEmail(String email);
 
   /**
    * 유저 정보 수정
@@ -25,10 +34,11 @@ public interface UserService {
    */
   User updateUser(User user, String newInfo);
 
-  /**
-   * 이메일 중복 여부를 확인
-   * @param email
-   * @return true | false
-   */
-  boolean isEmailExist(String email);
+//  /**
+//   * 이메일 중복 여부를 확인
+//   *
+//   * @param email
+//   * @return true | false
+//   */
+//  boolean isEmailExist(String email);
 }

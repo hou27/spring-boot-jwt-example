@@ -18,6 +18,13 @@ public class UserSignUpRequest {
   @NotEmpty(message = "Please enter your Name")
   private String name;
 
+  @Builder
+  public UserSignUpRequest(String email, String password, String name) {
+    this.email = email;
+    this.password = password;
+    this.name = name;
+  }
+
   /**
    * Transform to User Entity
    * @return User Entity
