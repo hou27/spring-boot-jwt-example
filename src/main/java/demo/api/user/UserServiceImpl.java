@@ -19,6 +19,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public User signUp(UserSignUpRequest signUpReq) throws Exception {
+    System.out.println("signUpReq = " + signUpReq.toString());
     if(this.isEmailExist(signUpReq.getEmail())) {
       throw new Exception("Your Mail already Exist.");
     }

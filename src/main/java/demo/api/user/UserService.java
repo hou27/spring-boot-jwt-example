@@ -33,12 +33,4 @@ public interface UserService {
    * @return 수정된 User
    */
   User updateUser(User user, String newInfo);
-
-//  /**
-//   * 이메일 중복 여부를 확인
-//   *
-//   * @param email
-//   * @return true | false
-//   */
-//  boolean isEmailExist(String email);
 }

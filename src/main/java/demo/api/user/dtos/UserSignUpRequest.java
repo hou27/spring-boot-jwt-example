@@ -5,10 +5,11 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
-@Getter @Setter
+@Getter
+@ToString
 public class UserSignUpRequest {
   @NotEmpty(message = "Please enter your Email")
   @Email
