@@ -18,6 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest
@@ -30,22 +31,42 @@ class UserServiceTest {
   private UserService userService;
   @Autowired
   private UserRepository userRepository;
+  @Autowired
+  private PasswordEncoder bCryptPasswordEncoder;
 
   @BeforeEach
   public void beforeEach() {
-    AppConfig appConfig = new AppConfig(userRepository);
+    AppConfig appConfig = new AppConfig(userRepository, bCryptPasswordEncoder);
     userService = appConfig.userService();
   }
 
   @Test
   @DisplayName("유저 회원가입")
   void signUp() throws Exception {
+    // given
     UserSignUpRequest user = createSignUpRequest();
     System.out.println("user = " + user.toString());
+
+    // when
     User newUser = userService.signUp(user);
 
+    // then
     System.out.println("newUser = " + newUser.toString());
     assertThat(newUser.getEmail()).isEqualTo(EMAIL);
+  }
+
+  @Test
+  @DisplayName("비밀번호는 암호화되어야 한다.")
+  void hashPassword() throws Exception {
+    // given
+    UserSignUpRequest user = createSignUpRequest();
+
+    // when
+    User newUser = userService.signUp(user);
+
+    // then
+    System.out.println("newUser pw = " + newUser.getPassword());
+    assertThat(newUser.getPassword()).isNotEqualTo(PASSWORD);
   }
 
   @Test

@@ -6,6 +6,7 @@ import demo.api.user.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,13 +15,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class UserServiceImpl implements UserService {
   private final UserRepository userRepository;
+  private final PasswordEncoder bCryptPasswordEncoder;
 
   @Override
   public User signUp(UserSignUpRequest signUpReq) throws Exception {
     if(this.isEmailExist(signUpReq.getEmail())) {
       throw new Exception("Your Mail already Exist.");
     }
-    return userRepository.save(signUpReq.toUserEntity());
+    User newUser = signUpReq.toUserEntity();
+    newUser.hashPassword(bCryptPasswordEncoder);
+    return userRepository.save(newUser);
   }
 
   @Override
