@@ -1,7 +1,6 @@
 package demo.api.user;
 
 import demo.api.user.domain.User;
-import demo.api.user.dtos.UserSignInRequest;
 import demo.api.user.dtos.UserSignUpRequest;
 import java.util.List;
 import java.util.Optional;
