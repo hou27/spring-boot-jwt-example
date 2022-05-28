@@ -5,16 +5,16 @@
   <div>
     <table>
       <thead>
-      <tr>
-        <th>#</th>
-        <th>My Profile</th>
-      </tr>
+        <tr>
+          <th>#</th>
+          <th>My Profile</th>
+        </tr>
       </thead>
       <tbody>
-      <tr>
-        <td th:text="${userDetail.get().email}"></td>
-        <td th:text="${userDetail.get().name}"></td>
-      </tr>
+        <tr th:if="${userDetail}">
+          <td th:text="${userDetail.getEmail()}"></td>
+          <td th:text="${userDetail.getName()}"></td>
+        </tr>
       </tbody>
     </table>
   </div>

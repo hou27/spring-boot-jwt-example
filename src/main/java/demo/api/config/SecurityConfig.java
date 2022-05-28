@@ -37,6 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    web.ignoring().antMatchers("/?/**");
 //  }
 
+  /**
+   * 인증에 대한 지원
+   */
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());

@@ -7,7 +7,12 @@ import demo.api.user.exception.UserNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -15,7 +20,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * User 관련 HTTP 요청 처리
@@ -40,22 +44,24 @@ public class UserController {
 
   @GetMapping("/signIn")
   public String signIn(@RequestParam(value = "fail", required = false) String flag, Model model) {
-    if(flag == null || !flag.equals("true")) {
-      model.addAttribute("failed", false);
-      return "user/signIn";
-    }
-    else {
-      model.addAttribute("failed", true);
-      return "user/signIn";
-    }
+    model.addAttribute("failed", flag != null);
+
+    return "user/signIn";
   }
-
+//  @Autowired
+//  private UserDetailsService userDetailsService;
   @GetMapping("/profile")
-  public String profile(Model model, @AuthenticationPrincipal User user) {
-    User userDetail = userService.findByEmail(user.getEmail())
-        .orElseThrow(() -> new UserNotFoundException());
+  public String profile(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//    System.out.println("principal : " + authentication.getPrincipal());
+//    System.out.println("Implementing class of UserDetails: " + authentication.getPrincipal().getClass());
+//    System.out.println("Implementing class of UserDetailsService: " + userDetailsService.getClass());
+    if (userDetails != null) {
+      User userDetail = userService.findByEmail(userDetails.getUsername())
+          .orElseThrow(() -> new UserNotFoundException());
 
-    model.addAttribute("userDetail", userDetail);
+      model.addAttribute("userDetail", userDetail);
+    }
 
     return "user/profile";
   }
