@@ -1,11 +1,14 @@
 package demo.api.config;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
@@ -14,7 +17,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  * @Configuration 애노테이션 대신 @EnableWebSecurity 애노테이션을 추가한다.
  */
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+  private final UserDetailsService userDetailsService;
 
   /**
    * PasswordEncoder를 Bean으로 등록
@@ -32,6 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //    web.ignoring().antMatchers("/?/**");
 //  }
 
+  @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+  }
+
   /**
    * 인증 or 인가에 대한 설정
    */
@@ -39,9 +49,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   protected void configure(HttpSecurity http) throws Exception {
     http
         .csrf().disable()
-        .formLogin().disable()//loginPage("/user/signIn")
+        .formLogin()
+        .loginPage("/user/signIn")
+        .loginProcessingUrl("/user/signInProc")
+        .usernameParameter("email")
+        .passwordParameter("password")
+        .defaultSuccessUrl("/")
+        .failureUrl("/user/signIn?fail=true");
+    http
         .authorizeRequests()
-        .antMatchers("/", "/user/signUp").permitAll()
+        .antMatchers("/", "/user/signUp", "/user/userList", "/user/signIn*").permitAll()
         .anyRequest().authenticated();
   }
 }

@@ -70,6 +70,22 @@ class UserServiceTest {
   }
 
   @Test
+  @DisplayName("유저 로그인")
+  void signIn() throws Exception {
+    // given
+    UserSignUpRequest user = createSignUpRequest();
+    System.out.println("user = " + user.toString());
+    User newUser = userService.signUp(user);
+
+    // when
+    Boolean flag = newUser.checkPassword(PASSWORD, bCryptPasswordEncoder);
+    System.out.println("flag = " + flag);
+
+    // then
+
+  }
+
+  @Test
   @DisplayName("모든 유저 리스트를 반환")
   void findAll() throws Exception {
     // given

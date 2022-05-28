@@ -26,14 +26,19 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
 	/*
+	thymeleaf
+	 */
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	/*
 	Data JPA
 	 */
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
 	/*
 	Lombok
 	 */
-    compileOnly 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	/*

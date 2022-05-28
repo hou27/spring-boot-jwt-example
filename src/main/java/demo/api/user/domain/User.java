@@ -1,8 +1,11 @@
 package demo.api.user.domain;
 
 import demo.api.common.domain.CoreEntity;
+import demo.api.user.repository.UserRepository;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +26,15 @@ public class User extends CoreEntity {
   @Column(length = 10, nullable = false)
   private String name;
 
+//  @Enumerated(EnumType.STRING)
+//  private UserRole role;
+
   @Builder
-  public User(String email, String password, String name) {
+  public User(String email, String password, String name /*UserRole role*/) {
     this.email = email;
     this.password = password;
     this.name = name;
+//    this.role = role;
   }
 
   // https://reflectoring.io/spring-security-password-handling/

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="container">
+  <div>
+    <table>
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>My Profile</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td th:text="${userDetail.get().email}"></td>
+        <td th:text="${userDetail.get().name}"></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <a href="/">Home</a>
+</div>
+</body>
+</html>
