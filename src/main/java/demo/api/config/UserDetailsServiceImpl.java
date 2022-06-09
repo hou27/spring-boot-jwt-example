@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(String email) throws UserNotFoundException {
 
     User user = userRepository.findByEmail(email)
-        .orElseThrow(() -> new UserNotFoundException());
+        .orElseThrow(UserNotFoundException::new);
     Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 
     return new org

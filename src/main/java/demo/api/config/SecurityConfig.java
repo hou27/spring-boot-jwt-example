@@ -17,9 +17,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-//  private final UserRepository userRepository;
-  // https://spring.io/blog/2022/02/21/spring-security-without-the-websecurityconfigureradapter
-  // https://github.com/spring-projects/spring-security/issues/10822
   @Bean
   public UserDetailsService userDetailsService() {
     return new UserDetailsServiceImpl();
@@ -43,6 +40,7 @@ public class SecurityConfig {
         .authorizeRequests()
         .antMatchers("/", "/user/signUp", "/user/userList", "/user/signIn*").permitAll()
         .anyRequest().authenticated();
+    
     return http.build();
   }
 }
