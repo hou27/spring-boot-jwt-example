@@ -40,7 +40,7 @@ public class SecurityConfig {
         .authorizeRequests()
         .antMatchers("/", "/user/signUp", "/user/userList", "/user/signIn*").permitAll()
         .anyRequest().authenticated();
-    
+
     return http.build();
   }
 }

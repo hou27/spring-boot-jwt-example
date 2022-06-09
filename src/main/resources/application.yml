@@ -9,3 +9,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: none
+  jwt:
+    token:
+      secret-key: open-secret-key
+      expire-length: 300000
