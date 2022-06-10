@@ -44,7 +44,7 @@ public class AuthController {
     return "user/signIn";
   }
 
-  @PostMapping
+  @PostMapping("/signIn")
   public ResponseEntity<TokenDto> signIn(@Validated UserSignInRequest signInReq) {
     return authService.signIn(signInReq);
   }

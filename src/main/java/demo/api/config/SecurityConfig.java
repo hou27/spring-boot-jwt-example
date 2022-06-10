@@ -42,12 +42,12 @@ public class SecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     // 
     http
-        .csrf().disable()
-        .formLogin()
-        .loginPage("/auth/signIn")
-        .usernameParameter("email")
-        .defaultSuccessUrl("/")
-        .failureUrl("/auth/signIn?fail=true");
+        .csrf().disable();
+//        .formLogin()
+//        .loginPage("/auth/signIn")
+//        .usernameParameter("email")
+//        .defaultSuccessUrl("/")
+//        .failureUrl("/auth/signIn?fail=true");
 
     //
     http
