@@ -30,7 +30,8 @@ public class AuthServiceImpl implements AuthService {
   @Transactional
   public User signUp(UserSignUpRequest signUpReq) throws Exception {
     System.out.println("signUpReq = " + signUpReq.toString());
-    if(this.isEmailExist(signUpReq.getEmail())) {
+
+    if(userRepository.existsByEmail(signUpReq.getEmail())) {
       throw new Exception("Your Mail already Exist.");
     }
     User newUser = signUpReq.toUserEntity();
@@ -52,16 +53,5 @@ public class AuthServiceImpl implements AuthService {
     } catch (AuthenticationException e) {
       throw new CustomException("Invalid credentials supplied", HttpStatus.UNPROCESSABLE_ENTITY);
     }
-  }
-
-  /**
-   * 이메일 중복 여부를 확인
-   *
-   * @param email
-   * @return true | false
-   */
-  private boolean isEmailExist(String email) {
-    Optional<User> byEmail = userRepository.findByEmail(email);
-    return !byEmail.isEmpty();
   }
 }
