@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,6 +34,15 @@ public class UserController {
 
       model.addAttribute("userDetail", userDetail);
     }
+
+    return "user/profile";
+  }
+
+  @GetMapping("/profile/{username}")
+  public String userProfile(Model model, @PathVariable String username) {
+    User user = userService.findByName(username)
+        .orElseThrow(() -> new UserNotFoundException());
+    model.addAttribute("userDetail", user);
 
     return "user/profile";
   }
