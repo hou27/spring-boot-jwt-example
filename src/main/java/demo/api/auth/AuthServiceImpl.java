@@ -1,6 +1,7 @@
 package demo.api.auth;
 
 import demo.api.exception.CustomException;
+import demo.api.jwt.JwtTokenFilter;
 import demo.api.jwt.JwtTokenProvider;
 import demo.api.jwt.dtos.TokenDto;
 import demo.api.user.domain.User;
@@ -9,7 +10,9 @@ import demo.api.user.dtos.UserSignUpRequest;
 import demo.api.user.repository.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -40,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public TokenDto signIn(UserSignInRequest signInReq) {
+  public ResponseEntity<TokenDto> signIn(UserSignInRequest signInReq) {
     try {
       Authentication authentication = authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(
@@ -48,8 +51,12 @@ public class AuthServiceImpl implements AuthService {
               signInReq.getPassword()
           )
       );
+      TokenDto tokenDto = new TokenDto(jwtTokenProvider.generateToken(authentication));
 
-      return new TokenDto(jwtTokenProvider.generateToken(authentication));
+      HttpHeaders httpHeaders = new HttpHeaders();
+      httpHeaders.add("Authorization", "Bearer " + tokenDto.getAccess_token());
+
+      return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
     } catch (AuthenticationException e) {
       throw new CustomException("Invalid credentials supplied", HttpStatus.UNPROCESSABLE_ENTITY);
     }

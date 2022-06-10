@@ -5,6 +5,7 @@ import demo.api.user.domain.User;
 import demo.api.user.dtos.UserSignInRequest;
 import demo.api.user.dtos.UserSignUpRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -43,7 +44,7 @@ public class AuthController {
   }
 
   @PostMapping
-  public TokenDto signIn(@Validated UserSignInRequest signInReq) {
+  public ResponseEntity<TokenDto> signIn(@Validated UserSignInRequest signInReq) {
     return authService.signIn(signInReq);
   }
 }

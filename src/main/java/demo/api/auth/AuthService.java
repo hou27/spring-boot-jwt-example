@@ -4,6 +4,7 @@ import demo.api.jwt.dtos.TokenDto;
 import demo.api.user.domain.User;
 import demo.api.user.dtos.UserSignInRequest;
 import demo.api.user.dtos.UserSignUpRequest;
+import org.springframework.http.ResponseEntity;
 
 public interface AuthService {
   /**
@@ -18,5 +19,5 @@ public interface AuthService {
    * @param signInReq 유저의 이메일과 비밀번호
    * @return json web token
    */
-  TokenDto signIn(UserSignInRequest signInReq);
+  ResponseEntity<TokenDto> signIn(UserSignInRequest signInReq);
 }

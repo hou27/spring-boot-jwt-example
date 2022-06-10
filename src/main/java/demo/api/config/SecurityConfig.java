@@ -33,7 +33,8 @@ public class SecurityConfig {
 
   @Bean
   public AuthenticationManager authenticationManager(
-      AuthenticationConfiguration authenticationConfiguration) throws Exception {
+      AuthenticationConfiguration authenticationConfiguration
+  ) throws Exception {
     return authenticationConfiguration.getAuthenticationManager();
   }
 
@@ -43,12 +44,9 @@ public class SecurityConfig {
     http
         .csrf().disable()
         .formLogin()
-        .loginPage("/user/signIn")
-        .loginProcessingUrl("/user/signInProc")
-        .usernameParameter("email")
-        .passwordParameter("password")
+        .loginPage("/auth/signIn")
         .defaultSuccessUrl("/")
-        .failureUrl("/user/signIn?fail=true");
+        .failureUrl("/auth/signIn?fail=true");
 
     //
     http
