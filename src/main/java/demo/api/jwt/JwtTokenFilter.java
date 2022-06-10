@@ -31,7 +31,6 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(auth); // 정상 토큰이면 SecurityContext에 저장
       }
     } catch (CustomException ex) {
-      //this is very important, since it guarantees the user is not authenticated at all
       SecurityContextHolder.clearContext();
       response.sendError(ex.getHttpStatus().value(), ex.getMessage());
       return;

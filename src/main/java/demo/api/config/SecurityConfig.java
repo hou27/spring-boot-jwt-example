@@ -45,6 +45,7 @@ public class SecurityConfig {
         .csrf().disable()
         .formLogin()
         .loginPage("/auth/signIn")
+        .usernameParameter("email")
         .defaultSuccessUrl("/")
         .failureUrl("/auth/signIn?fail=true");
 

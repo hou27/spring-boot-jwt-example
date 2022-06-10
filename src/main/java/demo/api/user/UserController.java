@@ -26,6 +26,7 @@ public class UserController {
 
   @GetMapping("/profile")
   public String profile(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+    System.out.println("userDetails = " + userDetails);
     if (userDetails != null) {
       User userDetail = userService.findByEmail(userDetails.getUsername())
           .orElseThrow(() -> new UserNotFoundException());

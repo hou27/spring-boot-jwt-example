@@ -4,6 +4,7 @@ import demo.api.jwt.dtos.TokenDto;
 import demo.api.user.domain.User;
 import demo.api.user.dtos.UserSignInRequest;
 import demo.api.user.dtos.UserSignUpRequest;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -29,7 +30,7 @@ public class AuthController {
   public String signUp(@Validated UserSignUpRequest signUpReq) throws Exception {
     User user = authService.signUp(signUpReq);
 
-    if(user.getEmail() != "") {
+    if(!Objects.isNull(user)) {
       return "redirect:/user/signIn";
     }
 
