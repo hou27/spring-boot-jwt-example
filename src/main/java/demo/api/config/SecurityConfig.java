@@ -21,11 +21,7 @@ public class SecurityConfig {
   private final JwtTokenProvider jwtTokenProvider;
   private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
   private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-  
-//  @Bean
-//  public UserDetailsService userDetailsService() {
-//    return new UserDetailsServiceImpl();
-//  }
+
   @Bean
   public BCryptPasswordEncoder passwordEncoder() {
     return new BCryptPasswordEncoder();
@@ -48,9 +44,9 @@ public class SecurityConfig {
         .authorizeRequests()
         .antMatchers(
             "/",
-            "/user/signUp",
+            "/auth/signUp",
             "/user/userList",
-            "/user/signIn*",
+            "/auth/signIn*",
             "/favicon.ico"
         ).permitAll()
         .anyRequest().authenticated();

@@ -3,24 +3,17 @@ package demo.api.user.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-import demo.api.AppConfig;
+import demo.api.auth.AuthService;
 import demo.api.user.UserService;
-import demo.api.user.UserServiceImpl;
 import demo.api.user.domain.User;
 import demo.api.user.dtos.UserSignUpRequest;
 import demo.api.user.repository.UserRepository;
 import java.util.List;
 import java.util.Optional;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,17 +24,13 @@ class UserServiceTest {
   private static final String EMAIL = "test@email.com";
   private static final String PASSWORD = "12345";
   private static final String NAME = "김정호";
-  private UserService userService;
-  @Autowired
-  private UserRepository userRepository;
+
   @Autowired
   private PasswordEncoder bCryptPasswordEncoder;
-
-  @BeforeEach
-  public void beforeEach() {
-    AppConfig appConfig = new AppConfig(userRepository, bCryptPasswordEncoder);
-    userService = appConfig.userService();
-  }
+  @Autowired
+  private UserService userService;
+  @Autowired
+  private AuthService authService;
 
   @Test
   @DisplayName("유저 회원가입")
@@ -51,7 +40,7 @@ class UserServiceTest {
     System.out.println("user = " + user.toString());
 
     // when
-    User newUser = userService.signUp(user);
+    User newUser = authService.signUp(user);
 
     // then
     System.out.println("newUser = " + newUser.toString());
@@ -65,7 +54,7 @@ class UserServiceTest {
     UserSignUpRequest user = createSignUpRequest();
 
     // when
-    User newUser = userService.signUp(user);
+    User newUser = authService.signUp(user);
 
     // then
     System.out.println("newUser pw = " + newUser.getPassword());
@@ -78,10 +67,10 @@ class UserServiceTest {
     // given
     UserSignUpRequest user = createSignUpRequest();
     System.out.println("user = " + user.toString());
-    User newUser = userService.signUp(user);
+    User newUser = authService.signUp(user);
 
     // when
-    Boolean flag = newUser.checkPassword(PASSWORD, bCryptPasswordEncoder);
+    boolean flag = newUser.checkPassword(PASSWORD, bCryptPasswordEncoder);
     System.out.println("flag = " + flag);
 
     // then
@@ -94,7 +83,7 @@ class UserServiceTest {
     List<User> prevUserList = userService.findAll();
     int prevLen = prevUserList.size();
     UserSignUpRequest user1 = createSignUpRequest();
-    userService.signUp(user1);
+    authService.signUp(user1);
 
     // when
     List<User> userList = userService.findAll();
@@ -108,7 +97,7 @@ class UserServiceTest {
   void findByEmail() throws Exception {
     // given
     UserSignUpRequest user1 = createSignUpRequest();
-    userService.signUp(user1);
+    authService.signUp(user1);
 
     // when
     Optional<User> byEmail = userService.findByEmail(EMAIL);

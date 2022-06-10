@@ -24,25 +24,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserController {
   private final UserService userService;
 
-  @GetMapping("/signUp")
-  public String signUp() {
-    return "user/signUp";
-  }
-
-  @PostMapping("/signUp")
-  public String signUp(@Validated UserSignUpRequest signUpReq) throws Exception {
-    User user = userService.signUp(signUpReq);
-
-    return "redirect:/user/signIn";
-  }
-
-  @GetMapping("/signIn")
-  public String signIn(@RequestParam(value = "fail", required = false) String flag, Model model) {
-    model.addAttribute("failed", flag != null);
-
-    return "user/signIn";
-  }
-
   @GetMapping("/profile")
   public String profile(Model model, @AuthenticationPrincipal UserDetails userDetails) {
     if (userDetails != null) {

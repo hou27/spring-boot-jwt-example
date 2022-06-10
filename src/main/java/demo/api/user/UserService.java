@@ -7,13 +7,6 @@ import java.util.Optional;
 
 public interface UserService {
   /**
-   * 유저의 정보로 회원가입
-   * @param signUpReq 가입할 유저의 정보 Dto
-   * @return 가입된 유저 정보
-   */
-  User signUp(UserSignUpRequest signUpReq) throws Exception;
-
-  /**
    * 모든 유저 리스트를 반환
    * @return 유저 리스트
    */

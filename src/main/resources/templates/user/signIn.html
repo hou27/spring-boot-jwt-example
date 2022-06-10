@@ -10,7 +10,7 @@
       <h2>로그인</h2>
     </div>
     <h3 th:if="${failed}">Fail to login</h3>
-    <form action="/user/signInProc" method="post">
+    <form action="/auth/signIn" method="post">
       <div class="form-group">
         <label for="email">Email</label>
         <input type="email" id="email" name="email" placeholder="Enter your email">
