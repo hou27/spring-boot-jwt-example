@@ -1,6 +1,6 @@
 package demo.api.jwt;
 
-import demo.api.jwt.exception.CustomException;
+import demo.api.exception.CustomException;
 import java.io.IOException;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -28,7 +28,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     try {
       if (token != null && jwtTokenProvider.validateToken(token)) {
         Authentication auth = jwtTokenProvider.getAuthentication(token);
-        SecurityContextHolder.getContext().setAuthentication(auth);
+        SecurityContextHolder.getContext().setAuthentication(auth); // 정상 토큰이면 SecurityContext에 저장
       }
     } catch (CustomException ex) {
       //this is very important, since it guarantees the user is not authenticated at all

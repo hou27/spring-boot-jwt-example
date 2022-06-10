@@ -8,8 +8,9 @@ spring:
   jpa:
     show-sql: true
     hibernate:
+      format_sql: true
       ddl-auto: none
-  jwt:
-    token:
-      secret-key: open-secret-key
-      expire-length: 300000
+jwt:
+  token:
+    secret-key: aG91Mjctc2ltcGxlLXNwcmluZy1ib290LWFwaS1qd3QK
+    expire-length: 300000

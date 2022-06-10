@@ -1,4 +1,4 @@
-package demo.api.jwt.exception;
+package demo.api.exception;
 
 import org.springframework.http.HttpStatus;
 

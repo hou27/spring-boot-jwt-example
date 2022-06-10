@@ -42,14 +42,9 @@ public class UserController {
 
     return "user/signIn";
   }
-//  @Autowired
-//  private UserDetailsService userDetailsService;
+
   @GetMapping("/profile")
   public String profile(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//    System.out.println("principal : " + authentication.getPrincipal());
-//    System.out.println("Implementing class of UserDetails: " + authentication.getPrincipal().getClass());
-//    System.out.println("Implementing class of UserDetailsService: " + userDetailsService.getClass());
     if (userDetails != null) {
       User userDetail = userService.findByEmail(userDetails.getUsername())
           .orElseThrow(() -> new UserNotFoundException());
@@ -60,10 +55,9 @@ public class UserController {
     return "user/profile";
   }
 
-  @GetMapping("/user/userList")
+  @GetMapping("/userList")
   public String showUserList(Model model) {
     List<User> userList = userService.findAll();
-
     model.addAttribute("userList", userList);
 
     return "user/userList";
