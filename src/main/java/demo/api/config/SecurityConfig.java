@@ -40,14 +40,9 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    // 
+    // Disable csrf to use token
     http
         .csrf().disable();
-//        .formLogin()
-//        .loginPage("/auth/signIn")
-//        .usernameParameter("email")
-//        .defaultSuccessUrl("/")
-//        .failureUrl("/auth/signIn?fail=true");
 
     //
     http

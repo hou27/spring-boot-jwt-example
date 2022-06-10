@@ -5,6 +5,8 @@ import demo.api.user.domain.User;
 import demo.api.user.dtos.UserSignInRequest;
 import demo.api.user.dtos.UserSignUpRequest;
 import java.util.Objects;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -45,7 +47,17 @@ public class AuthController {
   }
 
   @PostMapping("/signIn")
-  public ResponseEntity<TokenDto> signIn(@Validated UserSignInRequest signInReq) {
-    return authService.signIn(signInReq);
+  public String signIn(@Validated UserSignInRequest signInReq, HttpServletResponse res) {
+    ResponseEntity<TokenDto> tokenDtoResponseEntity = authService.signIn(signInReq);
+    Cookie cookie = new Cookie(
+        "access_token",
+        tokenDtoResponseEntity.getBody().getAccess_token()
+    );
+
+    cookie.setPath("/");
+    cookie.setMaxAge(Integer.MAX_VALUE);
+
+    res.addCookie(cookie);
+    return "redirect:/user/profile";
   }
 }
