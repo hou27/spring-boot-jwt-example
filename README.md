@@ -25,3 +25,12 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration a
     return authenticationConfiguration.getAuthenticationManager();
 }
 ```
+
+# TODO
+
+- [ ] Implement Refresh Token
+- [ ] Control Response Entity
+
+### Done ✓
+
+- [x] Post on Blog
