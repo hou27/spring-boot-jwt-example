@@ -60,6 +60,11 @@ dependencies {
 	Jwt (JSON Web Token Support For The JVM)
 	 */
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	/*
+	Redis
+	 */
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 }
 
 tasks.named('test') {
