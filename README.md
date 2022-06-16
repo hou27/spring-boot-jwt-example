@@ -28,8 +28,7 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration a
 
 # TODO
 
-- [ ] Implement Refresh Token
-- [ ] Control Response Entity
+- [ ] Implement regenerate refresh token
 
 ### Done ✓
 
