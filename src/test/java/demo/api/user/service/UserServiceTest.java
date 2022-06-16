@@ -1,13 +1,14 @@
 package demo.api.user.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.InstanceOfAssertFactories.completableFuture;
 import static org.junit.jupiter.api.Assertions.*;
 
 import demo.api.auth.AuthService;
+import demo.api.auth.dtos.SignUpRes;
 import demo.api.user.UserService;
 import demo.api.user.domain.User;
-import demo.api.user.dtos.UserSignUpRequest;
-import demo.api.user.repository.UserRepository;
+import demo.api.auth.dtos.SignUpReq;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -33,56 +34,12 @@ class UserServiceTest {
   private AuthService authService;
 
   @Test
-  @DisplayName("유저 회원가입")
-  void signUp() throws Exception {
-    // given
-    UserSignUpRequest user = createSignUpRequest();
-    System.out.println("user = " + user.toString());
-
-    // when
-    User newUser = authService.signUp(user);
-
-    // then
-    System.out.println("newUser = " + newUser.toString());
-    assertThat(newUser.getEmail()).isEqualTo(EMAIL);
-  }
-
-  @Test
-  @DisplayName("비밀번호는 암호화되어야 한다.")
-  void hashPassword() throws Exception {
-    // given
-    UserSignUpRequest user = createSignUpRequest();
-
-    // when
-    User newUser = authService.signUp(user);
-
-    // then
-    System.out.println("newUser pw = " + newUser.getPassword());
-    assertThat(newUser.getPassword()).isNotEqualTo(PASSWORD);
-  }
-
-  @Test
-  @DisplayName("유저 로그인")
-  void signIn() throws Exception {
-    // given
-    UserSignUpRequest user = createSignUpRequest();
-    System.out.println("user = " + user.toString());
-    User newUser = authService.signUp(user);
-
-    // when
-    boolean flag = newUser.checkPassword(PASSWORD, bCryptPasswordEncoder);
-    System.out.println("flag = " + flag);
-
-    // then
-  }
-
-  @Test
   @DisplayName("모든 유저 리스트를 반환")
-  void findAll() throws Exception {
+  void findAll() {
     // given
     List<User> prevUserList = userService.findAll();
     int prevLen = prevUserList.size();
-    UserSignUpRequest user1 = createSignUpRequest();
+    SignUpReq user1 = createSignUpRequest();
     authService.signUp(user1);
 
     // when
@@ -94,9 +51,9 @@ class UserServiceTest {
 
   @Test
   @DisplayName("이메일로 유저 찾기")
-  void findByEmail() throws Exception {
+  void findByEmail() {
     // given
-    UserSignUpRequest user1 = createSignUpRequest();
+    SignUpReq user1 = createSignUpRequest();
     authService.signUp(user1);
 
     // when
@@ -110,8 +67,8 @@ class UserServiceTest {
   void updateUser() {
   }
 
-  private UserSignUpRequest createSignUpRequest() {
-    return UserSignUpRequest.builder()
+  private SignUpReq createSignUpRequest() {
+    return SignUpReq.builder()
         .email(EMAIL)
         .password(PASSWORD)
         .name(NAME)

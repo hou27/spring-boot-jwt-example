@@ -29,26 +29,6 @@ public class UserServiceImpl implements UserService {
     return userRepository.findByName(name);
   }
 
-//  @Override
-//  public Optional<User> getMyInfo() {
-//    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//    String username = null;
-//
-//    if (authentication == null) {
-//      log.debug("Security Context에 인증 정보가 없습니다.");
-//      return Optional.empty();
-//    }
-//
-//    if (authentication.getPrincipal() instanceof UserDetails) {
-//      UserDetails springSecurityUserInfo = (UserDetails) authentication.getPrincipal();
-//      username = springSecurityUserInfo.getUsername();
-//    } else if (authentication.getPrincipal() instanceof String) {
-//      username = (String) authentication.getPrincipal();
-//    }
-//
-//    return Optional.ofNullable(userRepository.findByName(username).orElse(null));
-//  }
-
   @Override
   public User updateUser(User user, String newInfo) {
     return null;

@@ -1,14 +1,14 @@
 package demo.api.auth;
 
+import demo.api.auth.dtos.SignUpRes;
 import demo.api.exception.CustomException;
-import demo.api.jwt.JwtTokenFilter;
 import demo.api.jwt.JwtTokenProvider;
 import demo.api.jwt.dtos.TokenDto;
 import demo.api.user.domain.User;
-import demo.api.user.dtos.UserSignInRequest;
-import demo.api.user.dtos.UserSignUpRequest;
+import demo.api.auth.dtos.SignInReq;
+import demo.api.auth.dtos.SignUpReq;
 import demo.api.user.repository.UserRepository;
-import java.util.Optional;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -31,19 +31,24 @@ public class AuthServiceImpl implements AuthService {
 
   @Override
   @Transactional
-  public User signUp(UserSignUpRequest signUpReq) throws Exception {
+  public SignUpRes signUp(SignUpReq signUpReq){
     System.out.println("signUpReq = " + signUpReq.toString());
 
     if(userRepository.existsByEmail(signUpReq.getEmail())) {
-      throw new Exception("Your Mail already Exist.");
+      return new SignUpRes(false, "Your Mail already Exist.");
     }
     User newUser = signUpReq.toUserEntity();
     newUser.hashPassword(bCryptPasswordEncoder);
-    return userRepository.save(newUser);
+
+    User user = userRepository.save(newUser);
+    if(!Objects.isNull(user)) {
+      return new SignUpRes(true, null);
+    }
+    return new SignUpRes(false, "Fail to Sign Up");
   }
 
   @Override
-  public ResponseEntity<TokenDto> signIn(UserSignInRequest signInReq) {
+  public ResponseEntity<TokenDto> signIn(SignInReq signInReq) {
     try {
       Authentication authentication = authenticationManager.authenticate(
           new UsernamePasswordAuthenticationToken(

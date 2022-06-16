@@ -23,7 +23,7 @@ public class User extends CoreEntity {
   private String email;
   @Column(nullable = false)
   private String password;
-  @Column(length = 10, nullable = false)
+  @Column(length = 10, nullable = false, unique = true)
   private String name;
 
 //  @Enumerated(EnumType.STRING)

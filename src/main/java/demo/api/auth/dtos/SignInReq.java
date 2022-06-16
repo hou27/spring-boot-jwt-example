@@ -1,16 +1,14 @@
-package demo.api.user.dtos;
+package demo.api.auth.dtos;
 
-import demo.api.user.domain.User;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @ToString
-public class UserSignInRequest {
+public class SignInReq {
   @NotEmpty(message = "Please enter your Email")
   @Email
   private String email;
@@ -18,7 +16,7 @@ public class UserSignInRequest {
   private String password;
 
   @Builder
-  public UserSignInRequest(String email, String password) {
+  public SignInReq(String email, String password) {
     this.email = email;
     this.password = password;
   }

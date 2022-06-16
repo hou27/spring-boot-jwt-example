@@ -49,6 +49,7 @@ public class SecurityConfig {
             "/auth/signUp",
             "/user/userList",
             "/auth/signIn*",
+            "/user/profile/user/*",
             "/favicon.ico"
         ).permitAll()
         .anyRequest().authenticated();

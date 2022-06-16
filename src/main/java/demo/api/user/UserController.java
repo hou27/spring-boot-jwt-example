@@ -1,7 +1,8 @@
 package demo.api.user;
 
 import demo.api.user.domain.User;
-import demo.api.user.dtos.UserSignUpRequest;
+import demo.api.user.dtos.ProfileDto.ProfileReq;
+import demo.api.user.dtos.ProfileDto.ProfileRes;
 import demo.api.user.exception.UserNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -9,49 +10,46 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * User 관련 HTTP 요청 처리
  */
-@Controller
+@RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
   private final UserService userService;
 
   @GetMapping("/profile")
-  public String profile(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+  public ProfileRes profile(@AuthenticationPrincipal UserDetails userDetails) {
     System.out.println("userDetails = " + userDetails);
-    if (userDetails != null) {
-      User userDetail = userService.findByEmail(userDetails.getUsername())
-          .orElseThrow(() -> new UserNotFoundException());
+    User userDetail = userService.findByEmail(userDetails.getUsername())
+        .orElseThrow(() -> new UserNotFoundException());
 
-      model.addAttribute("userDetail", userDetail);
-    }
-
-    return "user/profile";
+    return ProfileRes.builder()
+        .email(userDetail.getEmail())
+        .name(userDetail.getName())
+        .build();
   }
 
-  @GetMapping("/profile/{username}")
-  public String userProfile(Model model, @PathVariable String username) {
-    User user = userService.findByName(username)
-        .orElseThrow(() -> new UserNotFoundException());
-    model.addAttribute("userDetail", user);
+  @GetMapping("/profile/user/{username}")
+  public ProfileRes userProfile(@PathVariable ProfileReq username) {
+    System.out.println("username.toString() = " + username.toString());
+    User user = userService.findByName(username.getName())
+        .orElseThrow(UserNotFoundException::new);
 
-    return "user/profile";
+    return ProfileRes.builder()
+        .email(user.getEmail())
+        .name(user.getName())
+        .build();
   }
 
   @GetMapping("/userList")
-  public String showUserList(Model model) {
-    List<User> userList = userService.findAll();
-    model.addAttribute("userList", userList);
-
-    return "user/userList";
+  public List<User> showUserList(Model model) {
+    return userService.findAll();
   }
 }
