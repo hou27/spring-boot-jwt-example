@@ -25,7 +25,7 @@ public class UserController {
   private final UserService userService;
 
   @GetMapping("/profile")
-  public ProfileRes profile(@AuthenticationPrincipal UserDetails userDetails) {
+  public ProfileRes profile(@AuthenticationPrincipal UserDetails userDetails) throws UserNotFoundException {
     System.out.println("userDetails = " + userDetails);
     User userDetail = userService.findByEmail(userDetails.getUsername())
         .orElseThrow(() -> new UserNotFoundException());
@@ -37,9 +37,8 @@ public class UserController {
   }
 
   @GetMapping("/profile/user/{username}")
-  public ProfileRes userProfile(@PathVariable ProfileReq username) {
-    System.out.println("username.toString() = " + username.toString());
-    User user = userService.findByName(username.getName())
+  public ProfileRes userProfile(@PathVariable String username) throws UserNotFoundException {
+    User user = userService.findByName(username)
         .orElseThrow(UserNotFoundException::new);
 
     return ProfileRes.builder()
