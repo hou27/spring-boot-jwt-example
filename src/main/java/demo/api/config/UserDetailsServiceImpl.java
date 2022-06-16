@@ -1,7 +1,7 @@
 package demo.api.config;
 
 import demo.api.user.domain.User;
-import demo.api.user.exception.UserNotFoundException;
+import demo.api.exception.UserNotFoundException;
 import demo.api.user.repository.UserRepository;
 import java.util.HashSet;
 import java.util.Set;

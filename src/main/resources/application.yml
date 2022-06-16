@@ -12,8 +12,10 @@ spring:
       ddl-auto: none
 jwt:
   token:
-    secret-key: aG91Mjctc2ltcGxlLXNwcmluZy1ib290LWFwaS1qd3QK
-    expire-length: 300000
+    access-token-secret-key: aG91Mjctc2ltcGxlLXNwcmluZy1ib290LWFwaS1qd3QK
+    access-token-expire-length: 300000
+    refresh-token-secret-key: cmVmcmVzaHRva2Vuc2VjcmV0a2V5Cg==
+    refresh-token-expire-length: 6000000
 redis:
   host: localhost
   port: 6379

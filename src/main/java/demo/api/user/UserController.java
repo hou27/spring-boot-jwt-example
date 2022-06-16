@@ -1,15 +1,12 @@
 package demo.api.user;
 
 import demo.api.user.domain.User;
-import demo.api.user.dtos.ProfileDto.ProfileReq;
 import demo.api.user.dtos.ProfileDto.ProfileRes;
-import demo.api.user.exception.UserNotFoundException;
+import demo.api.exception.UserNotFoundException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

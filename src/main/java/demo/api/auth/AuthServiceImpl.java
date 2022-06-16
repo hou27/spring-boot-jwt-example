@@ -9,7 +9,10 @@ import demo.api.auth.dtos.SignInReq;
 import demo.api.auth.dtos.SignUpReq;
 import demo.api.user.repository.UserRepository;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +31,10 @@ public class AuthServiceImpl implements AuthService {
   private final PasswordEncoder bCryptPasswordEncoder;
   private final JwtTokenProvider jwtTokenProvider;
   private final AuthenticationManager authenticationManager;
+  private final RedisTemplate<String, String> redisTemplate;
+
+  @Value("${jwt.token.refresh-token-expire-length}")
+  private long refresh_token_expire_time;
 
   @Override
   @Transactional
@@ -56,7 +63,21 @@ public class AuthServiceImpl implements AuthService {
               signInReq.getPassword()
           )
       );
-      TokenDto tokenDto = new TokenDto(jwtTokenProvider.generateToken(authentication));
+
+      String refresh_token = jwtTokenProvider.generateRefreshToken(authentication);
+
+      TokenDto tokenDto = new TokenDto(
+          jwtTokenProvider.generateAccessToken(authentication),
+          refresh_token
+      );
+
+      // Redis에 저장 - 만료 시간 설정을 통해 자동 삭제 처리
+      redisTemplate.opsForValue().set(
+              authentication.getName(),
+              refresh_token,
+              refresh_token_expire_time,
+              TimeUnit.MILLISECONDS
+          );
 
       HttpHeaders httpHeaders = new HttpHeaders();
       httpHeaders.add("Authorization", "Bearer " + tokenDto.getAccess_token());

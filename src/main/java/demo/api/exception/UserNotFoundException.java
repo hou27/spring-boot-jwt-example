@@ -1,4 +1,4 @@
-package demo.api.user.exception;
+package demo.api.exception;
 
 public class UserNotFoundException extends RuntimeException {
   public UserNotFoundException() {
