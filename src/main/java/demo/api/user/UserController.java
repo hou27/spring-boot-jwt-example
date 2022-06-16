@@ -36,7 +36,7 @@ public class UserController {
         .build();
   }
 
-  @GetMapping("/profile/user/{username}")
+  @GetMapping("/profile/view/{username}")
   public ProfileRes userProfile(@PathVariable String username) throws UserNotFoundException {
     User user = userService.findByName(username)
         .orElseThrow(UserNotFoundException::new);
