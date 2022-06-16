@@ -1,6 +1,7 @@
 package demo.api.auth;
 
 import demo.api.auth.dtos.SignUpRes;
+import demo.api.jwt.dtos.RegenerateTokenDto;
 import demo.api.jwt.dtos.TokenDto;
 import demo.api.auth.dtos.SignInReq;
 import demo.api.auth.dtos.SignUpReq;
@@ -20,4 +21,6 @@ public interface AuthService {
    * @return json web token
    */
   ResponseEntity<TokenDto> signIn(SignInReq signInReq);
+
+  ResponseEntity<TokenDto> regenerateToken(RegenerateTokenDto refreshTokenDto);
 }

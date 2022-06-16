@@ -1,6 +1,7 @@
 package demo.api.auth;
 
 import demo.api.auth.dtos.SignUpRes;
+import demo.api.jwt.dtos.RegenerateTokenDto;
 import demo.api.jwt.dtos.TokenDto;
 import demo.api.auth.dtos.SignInReq;
 import demo.api.auth.dtos.SignUpReq;
@@ -25,7 +26,12 @@ public class AuthController {
   }
 
   @PostMapping("/signIn")
-  public ResponseEntity<TokenDto> signIn(@Validated SignInReq signInReq, HttpServletResponse res) {
+  public ResponseEntity<TokenDto> signIn(@Validated SignInReq signInReq) {
     return authService.signIn(signInReq);
+  }
+
+  @PostMapping("/regenerateToken")
+  public ResponseEntity<TokenDto> regenerateToken(@Validated RegenerateTokenDto refreshTokenDto) {
+    return authService.regenerateToken(refreshTokenDto);
   }
 }

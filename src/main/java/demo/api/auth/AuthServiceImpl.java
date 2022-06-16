@@ -3,6 +3,7 @@ package demo.api.auth;
 import demo.api.auth.dtos.SignUpRes;
 import demo.api.exception.CustomException;
 import demo.api.jwt.JwtTokenProvider;
+import demo.api.jwt.dtos.RegenerateTokenDto;
 import demo.api.jwt.dtos.TokenDto;
 import demo.api.user.domain.User;
 import demo.api.auth.dtos.SignInReq;
@@ -84,7 +85,48 @@ public class AuthServiceImpl implements AuthService {
 
       return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
     } catch (AuthenticationException e) {
-      throw new CustomException("Invalid credentials supplied", HttpStatus.UNPROCESSABLE_ENTITY);
+      throw new CustomException("Invalid credentials supplied", HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @Override
+  public ResponseEntity<TokenDto> regenerateToken(RegenerateTokenDto refreshTokenDto) {
+    String refresh_token = refreshTokenDto.getRefresh_token();
+    try {
+      // 1. Refresh Token 검증
+      if (!jwtTokenProvider.validateRefreshToken(refresh_token)) {
+        throw new CustomException("Invalid refresh token supplied", HttpStatus.BAD_REQUEST);
+      }
+
+      // 2. Access Token 에서 User email 를 가져옵니다.
+      Authentication authentication = jwtTokenProvider.getAuthentication(refresh_token);
+
+      // 3. Redis 에서 User email 을 기반으로 저장된 Refresh Token 값을 가져옵니다.
+      String refreshToken = (String)redisTemplate.opsForValue().get(authentication.getName());
+      if(!refreshToken.equals(refresh_token)) {
+        throw new CustomException("Refresh Token doesn't match.", HttpStatus.BAD_REQUEST);
+      }
+
+      // 4. 새로운 토큰 생성
+      String new_refresh_token = jwtTokenProvider.generateRefreshToken(authentication);
+      TokenDto tokenDto = new TokenDto(
+          jwtTokenProvider.generateAccessToken(authentication),
+          new_refresh_token
+      );
+
+      // 5. RefreshToken Redis 업데이트
+      redisTemplate.opsForValue().set(
+          authentication.getName(),
+          new_refresh_token,
+          refresh_token_expire_time,
+          TimeUnit.MILLISECONDS
+      );
+
+      HttpHeaders httpHeaders = new HttpHeaders();
+
+      return new ResponseEntity<>(tokenDto, httpHeaders, HttpStatus.OK);
+    } catch (AuthenticationException e) {
+      throw new CustomException("Invalid refresh token supplied", HttpStatus.BAD_REQUEST);
     }
   }
 }

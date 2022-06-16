@@ -28,7 +28,7 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration a
 
 # TODO
 
-- [ ] Implement regenerate refresh token
+- [ ] Implement regenerate refresh token test code
 
 ### Done ✓
 
