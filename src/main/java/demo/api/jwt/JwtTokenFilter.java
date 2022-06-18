@@ -27,7 +27,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
     String token = jwtTokenProvider.resolveToken(request);
     try {
       if (token != null && jwtTokenProvider.validateAccessToken(token)) {
-        Authentication auth = jwtTokenProvider.getAuthentication(token);
+        Authentication auth = jwtTokenProvider.getAuthenticationByAccessToken(token);
         SecurityContextHolder.getContext().setAuthentication(auth); // 정상 토큰이면 SecurityContext에 저장
       }
     } catch (CustomException e) {

@@ -99,7 +99,7 @@ public class AuthServiceImpl implements AuthService {
       }
 
       // 2. Access Token 에서 User email 를 가져옵니다.
-      Authentication authentication = jwtTokenProvider.getAuthentication(refresh_token);
+      Authentication authentication = jwtTokenProvider.getAuthenticationByRefreshToken(refresh_token);
 
       // 3. Redis 에서 User email 을 기반으로 저장된 Refresh Token 값을 가져옵니다.
       String refreshToken = (String)redisTemplate.opsForValue().get(authentication.getName());

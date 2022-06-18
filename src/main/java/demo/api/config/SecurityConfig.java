@@ -50,6 +50,7 @@ public class SecurityConfig {
             "/user/userList",
             "/auth/signIn*",
             "/user/profile/view/**",
+            "/auth/regenerateToken",
             "/favicon.ico"
         ).permitAll()
         .anyRequest().authenticated();
