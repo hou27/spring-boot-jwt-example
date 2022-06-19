@@ -6,8 +6,11 @@ import demo.api.auth.AuthService;
 import demo.api.auth.dtos.SignInReq;
 import demo.api.auth.dtos.SignUpReq;
 import demo.api.auth.dtos.SignUpRes;
+import demo.api.exception.UserNotFoundException;
+import demo.api.jwt.dtos.RegenerateTokenDto;
 import demo.api.jwt.dtos.TokenDto;
 import demo.api.user.UserService;
+import demo.api.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +27,6 @@ class AuthServiceTest {
   private static final String PASSWORD = "12345";
   private static final String NAME = "김정호";
 
-  @Autowired
-  private PasswordEncoder bCryptPasswordEncoder;
   @Autowired
   private UserService userService;
   @Autowired
@@ -58,6 +59,7 @@ class AuthServiceTest {
 
     // then
     assertThat(response.getBody().getAccess_token()).isNotEmpty();
+    assertThat(response.getBody().getRefresh_token()).isNotEmpty();
   }
 
   @Test
@@ -67,14 +69,37 @@ class AuthServiceTest {
     SignUpReq user = createSignUpRequest();
 
     // when
-    SignUpRes signUpRes  = authService.signUp(user);
+    authService.signUp(user);
 
     // then
-//    System.out.println("newUser pw = " + newUser.getPassword());
-//    assertThat(newUser.getPassword()).isNotEqualTo(PASSWORD);
+    User createdUser = userService.findByEmail(EMAIL)
+        .orElseThrow(UserNotFoundException::new);
+    System.out.println("newUser pw = " + createdUser.getPassword());
+
+    assertThat(createdUser.getPassword()).isNotEqualTo(PASSWORD);
   }
 
+  @Test
+  @DisplayName("토큰 재발행")
+  void regenerateToken() {
+    // given
+    SignUpReq user = createSignUpRequest();
+    System.out.println("user = " + user.toString());
+    authService.signUp(user);
 
+    // when
+    ResponseEntity<TokenDto> response = authService.signIn(createSignInRequest());
+    String prevAccessToken = response.getBody().getAccess_token();
+
+    RegenerateTokenDto regenerateTokenDto = new RegenerateTokenDto(
+        response.getBody().getRefresh_token()
+    );
+
+    ResponseEntity<TokenDto> regeneratedToken = authService.regenerateToken(regenerateTokenDto);
+
+    // then
+    assertThat(regeneratedToken.getBody().getAccess_token()).isNotEqualTo(prevAccessToken);
+  }
 
   private SignUpReq createSignUpRequest() {
     return SignUpReq.builder()
