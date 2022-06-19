@@ -28,8 +28,8 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration a
 
 # TODO
 
-- [ ] Implement regenerate refresh token test code
 
 ### Done ✓
 
 - [x] Post on Blog
+- [x] Implement regenerate refresh token test code
