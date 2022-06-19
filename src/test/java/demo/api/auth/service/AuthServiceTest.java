@@ -74,6 +74,8 @@ class AuthServiceTest {
 //    assertThat(newUser.getPassword()).isNotEqualTo(PASSWORD);
   }
 
+
+
   private SignUpReq createSignUpRequest() {
     return SignUpReq.builder()
         .email(EMAIL)

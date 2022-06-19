@@ -79,8 +79,8 @@ public class JwtTokenProvider {
    * @return
    */
   public Authentication getAuthenticationByAccessToken(String access_token) {
-    String username = Jwts.parser().setSigningKey(access_token_secret_key).parseClaimsJws(access_token).getBody().getSubject();
-    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+    String userPrincipal = Jwts.parser().setSigningKey(access_token_secret_key).parseClaimsJws(access_token).getBody().getSubject();
+    UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
     
     return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
   }
@@ -91,8 +91,8 @@ public class JwtTokenProvider {
    * @return
    */
   public Authentication getAuthenticationByRefreshToken(String refresh_token) {
-    String username = Jwts.parser().setSigningKey(refresh_token_secret_key).parseClaimsJws(refresh_token).getBody().getSubject();
-    UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+    String userPrincipal = Jwts.parser().setSigningKey(refresh_token_secret_key).parseClaimsJws(refresh_token).getBody().getSubject();
+    UserDetails userDetails = userDetailsService.loadUserByUsername(userPrincipal);
 
     return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
   }
