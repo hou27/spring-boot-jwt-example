@@ -31,7 +31,7 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration a
 
 # Profile
 Set ```application.yml``` to use ```.dev.env``` file
-```
+```yaml
 spring:
   config:
     import: optional:file:.dev.env[.properties]

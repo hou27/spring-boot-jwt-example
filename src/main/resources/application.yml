@@ -5,8 +5,10 @@ spring:
     import: optional:file:.dev.env[.properties]
   # Database
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/${DB_NAME}
+#    driver-class-name: org.postgresql.Driver
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy # log4jdbc 사용을 위한 driver
+#    url: jdbc:postgresql://localhost:5432/${DB_NAME}
+    url: jdbc:log4jdbc:postgresql://localhost:5432/${DB_NAME} # log4jdbc 사용을 위한 'log4jdbc:' 추가
     username: postgres
     password: ${DB_PW}
   # jpa properties
