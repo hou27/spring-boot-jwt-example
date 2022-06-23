@@ -1,0 +1,79 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.7'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	/*
+	starter
+	 */
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	/*
+	thymeleaf
+	 */
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	/*
+	Data JPA
+	 */
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	/*
+	Lombok
+	 */
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	/*
+	Postgresql JDBC Driver
+	 */
+	implementation 'org.postgresql:postgresql:42.4.0'
+
+	/*
+	Log4jdbc-log4j2 - SQL문을 실행한 로그를 직관적으로 볼 수 있도록 해주는 라이브러리
+	 */
+	// https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4
+	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'
+
+
+	/*
+	Security
+	 */
+	implementation 'org.springframework.boot:spring-boot-starter-security:2.7.0'
+
+	/*
+	Validation
+	 */
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	/*
+	Jwt (JSON Web Token Support For The JVM)
+	 */
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+	/*
+	Redis
+	 */
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

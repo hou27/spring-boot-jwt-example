@@ -1,0 +1,29 @@
+server:
+  port: 3000
+spring:
+  config:
+    import: optional:file:.dev.env[.properties]
+  # Database
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/${DB_NAME}
+    username: postgres
+    password: ${DB_PW}
+  # jpa properties
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: true
+jwt:
+  token:
+    access-token-secret-key: ${ACCESS_TOKEN_SECRET_KEY}
+    access-token-expire-length: 300000
+    refresh-token-secret-key: ${REFRESH_TOKEN_SECRET_KEY}
+    refresh-token-expire-length: 6000000
+redis:
+  host: localhost
+  port: 6379
