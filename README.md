@@ -28,3 +28,11 @@ public AuthenticationManager authenticationManager(AuthenticationConfiguration a
     return authenticationConfiguration.getAuthenticationManager();
 }
 ```
+
+# Profile
+Set ```application.yml``` to use ```.dev.env``` file
+```
+spring:
+  config:
+    import: optional:file:.dev.env[.properties]
+```
