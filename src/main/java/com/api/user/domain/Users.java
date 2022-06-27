@@ -3,9 +3,12 @@ package com.api.user.domain;
 import com.api.common.domain.CoreEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Getter @Setter
 @NoArgsConstructor
 @ToString
+@Builder
 public class Users extends CoreEntity {
   @Column(nullable = false, unique = true)
   private String email;
@@ -22,16 +26,17 @@ public class Users extends CoreEntity {
   private String password;
   @Column(length = 10, nullable = false, unique = true)
   private String name;
+  @Enumerated(EnumType.STRING)
+  @Column(nullable = false)
+  @Builder.Default
+  private UserRole role = UserRole.ROLE_CLIENT;
 
-//  @Enumerated(EnumType.STRING)
-//  private UserRole role;
 
-  @Builder
-  public Users(String email, String password, String name /*UserRole role*/) {
+  public Users(String email, String password, String name, UserRole role) {
     this.email = email;
     this.password = password;
     this.name = name;
-//    this.role = role;
+    this.role = role;
   }
 
   // https://reflectoring.io/spring-security-password-handling/

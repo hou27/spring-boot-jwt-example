@@ -45,7 +45,9 @@ public class AuthServiceImpl implements AuthService {
     if(userRepository.existsByEmail(signUpReq.getEmail())) {
       return new SignUpRes(false, "Your Mail already Exist.");
     }
+
     Users newUser = signUpReq.toUserEntity();
+
     newUser.hashPassword(bCryptPasswordEncoder);
 
     Users user = userRepository.save(newUser);

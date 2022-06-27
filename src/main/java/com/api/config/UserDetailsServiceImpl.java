@@ -3,7 +3,7 @@ package com.api.config;
 import com.api.user.domain.Users;
 import com.api.exception.UserNotFoundException;
 import com.api.user.repository.UserRepository;
-import java.util.HashSet;
+import java.util.Collections;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -21,7 +21,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     System.out.println("email in loadUserByUsername = " + email);
     Users user = userRepository.findByEmail(email)
         .orElseThrow(UserNotFoundException::new);
-    Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+
+    Set<GrantedAuthority> grantedAuthorities = Collections.singleton(user.getRole());
 
     return new org
         .springframework

@@ -27,6 +27,7 @@ public class UserController {
     Users userDetail = userService.findByEmail(userDetails.getUsername())
         .orElseThrow(() -> new UserNotFoundException());
 
+    System.out.println("userDetails.getAuthorities " + userDetails.getAuthorities());
     return ProfileRes.builder()
         .email(userDetail.getEmail())
         .name(userDetail.getName())
