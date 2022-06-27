@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class AuthServiceImpl implements AuthService {
   private final UserRepository userRepository;
   private final PasswordEncoder bCryptPasswordEncoder;
@@ -38,7 +39,6 @@ public class AuthServiceImpl implements AuthService {
   private long refresh_token_expire_time;
 
   @Override
-  @Transactional
   public SignUpRes signUp(SignUpReq signUpReq){
     System.out.println("signUpReq = " + signUpReq.toString());
 

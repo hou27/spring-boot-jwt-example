@@ -14,6 +14,7 @@ import lombok.ToString;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 // @Entity 어노테이션을 클래스에 선언하면 그 클래스는 JPA가 관리
+// @Entity를 사용하면 생성자는 필수
 @Entity
 @Getter @Setter
 @NoArgsConstructor
