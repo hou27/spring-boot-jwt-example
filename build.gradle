@@ -52,7 +52,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.bgee.log4jdbc-log4j2/log4jdbc-log4j2-jdbc4
 	implementation 'org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4:1.16'
 
-
 	/*
 	Security
 	 */
@@ -72,6 +71,11 @@ dependencies {
 	Redis
 	 */
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+	/*
+	Springdoc OpenAPI UI
+	 */
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
 }
 
 tasks.named('test') {

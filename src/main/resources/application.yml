@@ -29,3 +29,7 @@ jwt:
 redis:
   host: localhost
   port: 6379
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    use-root-path: true

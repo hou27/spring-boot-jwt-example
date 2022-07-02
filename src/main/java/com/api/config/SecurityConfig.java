@@ -50,6 +50,7 @@ public class SecurityConfig {
             "/auth/signIn*",
             "/user/profile/view/**",
             "/auth/regenerateToken",
+            "/swagger-ui*/**",
             "/favicon.ico"
         ).permitAll()
         .anyRequest().authenticated();
