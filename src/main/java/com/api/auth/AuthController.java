@@ -21,19 +21,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
   private final AuthService authService;
 
-  @Operation(summary = "Sign Up", description = "회원가입 메서드입니다.")
+  @Operation(summary = "회원가입", description = "회원가입 메서드입니다.")
   @PostMapping("/signUp")
   public SignUpRes signUp(@Validated SignUpReq signUpReq) {
     return authService.signUp(signUpReq);
   }
 
-  @Operation(summary = "Sign In", description = "로그인 메서드입니다.")
+  @Operation(summary = "로그인", description = "로그인 메서드입니다.")
   @PostMapping("/signIn")
   public ResponseEntity<TokenDto> signIn(@Validated SignInReq signInReq) {
     return authService.signIn(signInReq);
   }
 
-  @Operation(summary = "Regenerate Token", description = "토큰을 재발행하는 메서드입니다.")
+  @Operation(summary = "토큰 재발행", description = "토큰을 재발행하는 메서드입니다.")
   @PostMapping("/regenerateToken")
   public ResponseEntity<TokenDto> regenerateToken(@Validated RegenerateTokenDto refreshTokenDto) {
     return authService.regenerateToken(refreshTokenDto);
