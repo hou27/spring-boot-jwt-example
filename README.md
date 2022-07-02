@@ -39,7 +39,7 @@ spring:
 
 # API Doc
 You can see API Document on  
-[localhost:3000](localhost:3000)
+http://localhost:3000
 
 ## Preview
 ### Group 1
