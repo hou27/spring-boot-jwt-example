@@ -17,6 +17,7 @@ public class SwaggerConfig {
     return GroupedOpenApi.builder()
         .group("authentication is required")
         .pathsToMatch("/user/profile")
+        .addOpenApiCustomiser(buildSecurityOpenApi())
         .build();
   }
 
@@ -28,16 +29,22 @@ public class SwaggerConfig {
         .build();
   }
 
-  // https://swagger.io/docs/specification/authentication/
+  // https://velog.io/@soyeon207/%EC%9A%B0%EB%8B%B9%ED%83%95%ED%83%95-Swagger-%EC%A0%81%EC%9A%A9%EA%B8%B0#4-%EF%B8%8F-jwt-token-%EC%84%A4%EC%A0%95
+  public OpenApiCustomiser buildSecurityOpenApi() {
+    // jwt token 설정 시 header에 값을 넣어줌
+    return OpenApi -> OpenApi.addSecurityItem(new SecurityRequirement().addList("jwt access token"))
+        .getComponents().addSecuritySchemes("jwt access token", new SecurityScheme()
+            .name("Authorization")
+            .type(SecurityScheme.Type.HTTP)
+            .in(SecurityScheme.In.HEADER)
+            .bearerFormat("JWT")
+            .scheme("bearer"));
+  }
   @Bean
   public OpenAPI customOpenAPI() {
-    SecurityScheme bearerAuth = new SecurityScheme()
-        .type(SecurityScheme.Type.HTTP).bearerFormat("JWT").scheme("Bearer");
-    SecurityRequirement securityItem = new SecurityRequirement().addList("bearerAuth");
 
     return new OpenAPI()
-        .components(new Components().addSecuritySchemes("bearerAuth", bearerAuth))
-        .addSecurityItem(securityItem)
+        .components(new Components())
         .info(new Info().title("Spring Boot API Example")
             .description("Spring Boot API 예시 프로젝트입니다.")
             .version("v0.0.1"));
