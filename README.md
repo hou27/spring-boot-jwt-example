@@ -3,7 +3,7 @@
 Spring Boot를 이용한 간단한 JWT 예시 레포지토리 
 
 ---
-<img src="https://img.shields.io/badge/postgresql-gray?style=for-the-badge&logo=postgresql&logoColor=white"> <img src="https://img.shields.io/badge/Spring Boot-green?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/redis-red?style=for-the-badge&logo=redis&logoColor=black">
+<img src="https://img.shields.io/badge/postgresql-gray?style=for-the-badge&logo=postgresql&logoColor=white"> <img src="https://img.shields.io/badge/Spring Boot-green?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/redis-red?style=for-the-badge&logo=redis&logoColor=black"> <img src="https://img.shields.io/badge/Swagger-gree?style=for-the-badge&logo=Swagger&logoColor=black">
 
 
 # How to use authenticationManager Bean in 5.7.1
