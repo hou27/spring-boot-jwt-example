@@ -9,13 +9,21 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
-//  @Bean
-//  public GroupedOpenApi jwtApi() {
-//    return GroupedOpenApi.builder()
-//        .group("jwt-api")
-//        .pathsToMatch("/**")
-//        .build();
-//  }
+  @Bean
+  public GroupedOpenApi securityApi() {
+    return GroupedOpenApi.builder()
+        .group("authentication is required")
+        .pathsToMatch("/user/profile")
+        .build();
+  }
+
+  @Bean
+  public GroupedOpenApi nonSecurityApi() {
+    return GroupedOpenApi.builder()
+        .group("authentication isn't required")
+        .pathsToExclude("/user/profile")
+        .build();
+  }
 
   @Bean
   public OpenAPI customOpenAPI() {

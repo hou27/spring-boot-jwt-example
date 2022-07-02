@@ -45,11 +45,9 @@ public class SecurityConfig {
         .authorizeRequests()
         .antMatchers(
             "/",
-            "/auth/signUp",
+            "/auth/**",
             "/user/userList",
-            "/auth/signIn*",
             "/user/profile/view/**",
-            "/auth/regenerateToken",
             "/swagger-ui*/**",
             "/v3/api-docs/**",
             "/favicon.ico"
