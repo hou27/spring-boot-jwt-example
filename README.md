@@ -36,3 +36,18 @@ spring:
   config:
     import: optional:file:.dev.env[.properties]
 ```
+
+# API Doc
+You can see API Document on  
+[localhost:3000](localhost:3000)
+
+## Preview
+### Group 1
+> authentication is required
+
+![swagger screenshot](https://user-images.githubusercontent.com/65845941/177004280-9652b978-5e3c-4152-8c36-fcc42681bdec.PNG)
+
+### Group 2
+> authentication is not required
+
+![swagger screenshot2](https://user-images.githubusercontent.com/65845941/177004330-844a6055-2d77-49f8-bff5-1d8562b413fc.PNG)
