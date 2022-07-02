@@ -3,6 +3,7 @@ package com.api.user;
 import com.api.exception.UserNotFoundException;
 import com.api.user.domain.Users;
 import com.api.user.dtos.ProfileDto.ProfileRes;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * User 관련 HTTP 요청 처리
  */
+@Tag(name = "User", description = "유저 관련 api")
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor

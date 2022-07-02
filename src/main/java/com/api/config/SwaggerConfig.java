@@ -9,13 +9,13 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class SwaggerConfig {
-  @Bean
-  public GroupedOpenApi jwtApi() {
-    return GroupedOpenApi.builder()
-        .group("jwt-api-v1")
-        .pathsToMatch("/**")
-        .build();
-  }
+//  @Bean
+//  public GroupedOpenApi jwtApi() {
+//    return GroupedOpenApi.builder()
+//        .group("jwt-api")
+//        .pathsToMatch("/**")
+//        .build();
+//  }
 
   @Bean
   public OpenAPI customOpenAPI() {

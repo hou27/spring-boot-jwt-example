@@ -51,6 +51,7 @@ public class SecurityConfig {
             "/user/profile/view/**",
             "/auth/regenerateToken",
             "/swagger-ui*/**",
+            "/v3/api-docs/**",
             "/favicon.ico"
         ).permitAll()
         .anyRequest().authenticated();
