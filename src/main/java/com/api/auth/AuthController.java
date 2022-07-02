@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,13 +23,13 @@ public class AuthController {
   private final AuthService authService;
 
   @Operation(summary = "회원가입", description = "회원가입 메서드입니다.")
-  @PostMapping("/signUp")
+  @PostMapping(value = "/signUp", consumes = {"multipart/form-data"})
   public SignUpRes signUp(@Validated SignUpReq signUpReq) {
     return authService.signUp(signUpReq);
   }
 
   @Operation(summary = "로그인", description = "로그인 메서드입니다.")
-  @PostMapping("/signIn")
+  @PostMapping(value = "/signIn", consumes = {"multipart/form-data"})
   public ResponseEntity<TokenDto> signIn(@Validated SignInReq signInReq) {
     return authService.signIn(signInReq);
   }
