@@ -4,6 +4,7 @@ import com.api.exception.UserNotFoundException;
 import com.api.user.domain.Users;
 import com.api.user.dtos.ProfileDto.ProfileRes;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,7 @@ public class UserController {
   private final UserService userService;
 
   @Operation(summary = "유저 개인 프로필", description = "유저 프로필 조회 메서드입니다.")
+  @Parameter(hidden = true, name = "userDetails") // hide unnecessary parameter for doc
   @GetMapping("/profile")
   public ProfileRes profile(@AuthenticationPrincipal UserDetails userDetails) throws UserNotFoundException {
     System.out.println("userDetails = " + userDetails);
