@@ -51,3 +51,8 @@ http://localhost:3000
 > authentication is not required
 
 ![swagger screenshot2](https://user-images.githubusercontent.com/65845941/177004330-844a6055-2d77-49f8-bff5-1d8562b413fc.PNG)
+
+
+# TODO
+
+- [ ] Apply QueryDSL
