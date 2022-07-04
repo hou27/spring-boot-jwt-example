@@ -25,8 +25,6 @@ class UserServiceTest {
   private static final String NAME = "김정호";
 
   @Autowired
-  private PasswordEncoder bCryptPasswordEncoder;
-  @Autowired
   private UserService userService;
   @Autowired
   private AuthService authService;

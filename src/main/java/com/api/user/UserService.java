@@ -25,12 +25,6 @@ public interface UserService {
    */
   Optional<Users> findByName(String name);
 
-//  /**
-//   * Security Context에 존재하는 인증 정보를 통해 유저 정보 조회
-//   * @return 조회된 유저
-//   */
-//  Optional<User> getMyInfo();
-
   /**
    * 유저 정보 수정
    * @param user 수정활 User Entity
